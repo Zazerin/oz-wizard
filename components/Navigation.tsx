@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-function Nav() {
+function Navigation() {
   return (
     <ul>
       <li>
@@ -10,11 +10,11 @@ function Nav() {
       </li>
       <li>
         <Link href="/books/add">
-          <a>+ Add</a>
+          <a>Add book</a>
         </Link>
       </li>
     </ul>
   );
 }
 
-export default Nav;
+export default Navigation;
