@@ -71,12 +71,21 @@ function Book({ book }: BookProps) {
 }
 
 export const getServerSideProps: GetServerSideProps<
-  { book: BookDto },
+  { book: BookDto | null },
   { bookId: string }
 > = async ({ query }) => {
   const { bookId } = query;
-  const res = await fetch(`http://localhost:3000/api/books/${bookId}`);
-  const book: BookDto = await res.json();
+  let book = null;
+
+  try {
+    const res = await fetch(`http://localhost:3000/api/books/${bookId}`);
+
+    if (res.status === 200) {
+      book = (await res.json()) as BookDto;
+    }
+  } catch (e) {
+    console.error(e);
+  }
 
   return {
     props: {
