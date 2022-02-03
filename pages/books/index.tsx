@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Router from "next/router";
 import { List, ListItem } from "@material-ui/core";
-import { BookDto } from "helpers/BooksStore";
+import BooksStore, { BookDto } from "helpers/BooksStore";
 
 function Books({ books }: { books: BookDto[] }) {
   return (
@@ -24,8 +24,7 @@ function Books({ books }: { books: BookDto[] }) {
 }
 
 export const getServerSideProps = async () => {
-  const res = await fetch("http://localhost:3000/api/books");
-  const books = await res.json();
+  const books = await BooksStore.getAll();
   return {
     props: {
       books

@@ -9,7 +9,7 @@ import {
   makeStyles,
   Button
 } from "@material-ui/core";
-import { BookDto } from "helpers/BooksStore";
+import BooksStore, { BookDto } from "helpers/BooksStore";
 
 const useStyles = makeStyles({
   root: {
@@ -71,21 +71,11 @@ function Book({ book }: BookProps) {
 }
 
 export const getServerSideProps: GetServerSideProps<
-  { book: BookDto | null },
+  { book?: BookDto },
   { bookId: string }
 > = async ({ query }) => {
   const { bookId } = query;
-  let book = null;
-
-  try {
-    const res = await fetch(`http://localhost:3000/api/books/${bookId}`);
-
-    if (res.status === 200) {
-      book = (await res.json()) as BookDto;
-    }
-  } catch (e) {
-    console.error(e);
-  }
+  const book = await BooksStore.getById(bookId as string);
 
   return {
     props: {

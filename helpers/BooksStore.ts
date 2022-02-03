@@ -33,8 +33,8 @@ function _delete(id: string) {
 }
 
 export const booksStore = {
-    getAll: () => store,
-    getById: (id: string) => store.find(b => b.id === id),
+    getAll: (): Promise<BookDto[]>  => new Promise((res) => res(store)),
+    getById: (id: string): Promise<BookDto | undefined> => new Promise((res) => res(store.find(b => b.id === id))),
     create,
     delete: _delete
 };
