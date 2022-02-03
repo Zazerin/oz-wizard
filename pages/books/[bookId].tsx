@@ -71,7 +71,7 @@ function Book({ book }: BookProps) {
 }
 
 export const getServerSideProps: GetServerSideProps<
-  { book?: BookDto },
+  { book?: BookDto | null },
   { bookId: string }
 > = async ({ query }) => {
   const { bookId } = query;
@@ -79,7 +79,7 @@ export const getServerSideProps: GetServerSideProps<
 
   return {
     props: {
-      book
+      book: book || null
     }
   };
 };
